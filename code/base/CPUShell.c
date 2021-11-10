@@ -11,6 +11,8 @@ inline void NotImplemented(CPUState * state)
 
 // https://pastraiser.com/cpu/i8080/i8080_opcodes.html OPCODE Table
 
+// TODO(fran): try the goto label jumptable
+
 int Run8080cpuOperations(CPUState * state){
     byte * opcode = &state->MEMORY[state->PC];
     switch(*opcode){
