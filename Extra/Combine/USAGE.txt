@@ -1,0 +1,3 @@
+From command prompt:
+It will overwrite the output_filename file!
+Combine.exe <file1> <file2> ... <fileN> <output_filename>
