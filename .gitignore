@@ -8,7 +8,7 @@
 
 # Local History for Visual Studio Code
 .history/
-!.vscode/
+.vscode/
 
 # Executables, obj...
 *.exe
