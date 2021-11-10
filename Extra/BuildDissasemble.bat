@@ -4,4 +4,4 @@
 :: If you don't have it added to the path, try uncommenting the following line 
 :: call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
 
- cl /Fo"./Output/Combine" /Fe"./Output/Combine" Combine.c
+ cl /Fo"./Output/Dissasemble" /Fe"./Output/Dissasemble" Dissasemble.c

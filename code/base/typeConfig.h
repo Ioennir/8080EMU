@@ -2,7 +2,7 @@
 
 #define ui8 uint8_t
 #define ui16 uint16_t
-#define byte unsigned char
+#define byte uint8_t
 
 /*
     Flags position within the register

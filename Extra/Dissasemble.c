@@ -1,10 +1,11 @@
 #include <stdio.h>
-#include "typeConfig.h"
+#include <stdlib.h>
+#include "..\code\base\typeConfig.h"
 
-ui8 DisassembleCPUOperations(byte * codebuffer, ui16 pc){
+ui16 DisassembleCPUOperations(byte * codebuffer, ui16 pc){
     byte * code = &codebuffer[pc];
-    ui8 opbytes = 1;
-    printf("%04x", pc);
+    ui16 opbytes = 1;
+    printf("%04x ", pc);
     switch(*code){
         case 0x00: printf("NOP");break;
         case 0x01: printf("LXI      B,#$%02x%02x", code[2], code[1]); opbytes=3; break;
@@ -261,12 +262,30 @@ ui8 DisassembleCPUOperations(byte * codebuffer, ui16 pc){
         case 0xFC: printf("CM       #$%02x%02x", code[2], code[1]); opbytes=3; break;
         case 0xFD: printf("CALL     #$%02x%02x", code[2], code[1]); opbytes=3; break;
         case 0xFE: printf("CPI      #$%02x", code[1]); opbytes=2; break;
-        case 0xFF: printf("RST      7");break; 
+        case 0xFF: printf("RST      7");break;
     }
     printf("\n");
     return opbytes;
 }
 
+
+// we will pass as parameter the name of the hex file to dissasemble
 int main(int argc, char**argv){
-    
+    FILE * code = fopen(argv[1], "rb");
+    if(!code){
+        printf("Error: Couldn't open %s. \n", argv[1]);
+        return 1;
+    }
+    fseek(code, 0L, SEEK_END);
+    int codesize = ftell(code);
+    fseek(code, 0L, SEEK_SET);
+    byte *codebuffer = (byte *) malloc(codesize);
+    fread(codebuffer, codesize, 1, code);
+    fclose(code);
+    ui16 pc = 0;
+    while (pc < codesize){
+        pc += DisassembleCPUOperations(codebuffer, pc);
+        _sleep(3);
+    }
+    return 0;
 }
