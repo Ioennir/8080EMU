@@ -5,11 +5,42 @@
 #define byte uint8_t
 
 #define Kilobytes(Value) ((Value)*1024LL)
+#define Swap(A, B) \
+{   A += B; \
+    B = A - B;\
+    A -= B; }
 
 /*
     Flags position within the register
     A REG (8BITS) | FLAGS (8 BITS)
     ............. | x x x S Z A P C
+
+    FLAGS WORK THIS WAY UNLESS INSTRUCTION SPECIFIES DIFFERENTLY
+    
+    zero:
+    If the result of an instruction has the value 0, this flag is set; 
+    otherwise it is reset.
+    
+    sign:
+    If the most significant bit of the result of the operation has the value 1,
+    this flag is set; otherwise it is reset.
+    
+    parity:
+    If the modulo 2 sum of the bits of the result of the operation is 0, 
+    (Le., if the result has even parity), this flag is set; otherwise 
+    it is reset (Le., if the result has odd parity).
+    
+    carry:
+    If the instruction resulted in a carry (from addition), or a borrow 
+    (from subtraction or a comparison) out of the highorder bit, 
+    this flag is set; otherwise it is reset.
+    
+    auxiliary carry:
+    If the instruction caused a carry out of bit 3 and into bit 4 of the resulting
+    value, the auxiliary carry is set; otherwise it is reset. This flag is affected
+    by single precision additions, subtractions, increments, decrements, comparisons,
+    and logical operations, but is principally used with additions and increments 
+    preceding a DAA (Decimal Adjust Accumulator) instruction.
 
 */
 
