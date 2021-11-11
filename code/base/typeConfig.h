@@ -4,6 +4,8 @@
 #define ui16 uint16_t
 #define byte uint8_t
 
+#define Kilobytes(Value) ((Value)*1024LL)
+
 /*
     Flags position within the register
     A REG (8BITS) | FLAGS (8 BITS)
@@ -23,7 +25,7 @@ General registers
 |       A       |     Flags     |  S Z A P C
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |       B       |       C       | BC
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ 
 |       D       |       E       | DE
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |       H       |       L       | HL
@@ -49,7 +51,7 @@ typedef struct CPUState {
     ui8 L;
     ui16 SP;
     ui16 PC;
-    ui8 * MEMORY;
+    ui8 * MEMORY;           // 16K or 64K
     ui8 int_enable;
 
 } CPUState;
