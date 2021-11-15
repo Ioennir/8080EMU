@@ -29,7 +29,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x01: LXI_RP_DW(state, &state->B, &state->C, opcode);break; // LXI B,DW
         case 0x02: NotImplemented(state); break; // STAX B
         case 0x03: INX_RP(&state->B, &state->C); break; 
-        case 0x04: NotImplemented(state); break; 
+        case 0x04: INR_R(state, &state->B); break; 
         case 0x05: NotImplemented(state); break; 
         case 0x06: MVI_R_DW(state, &state->B, opcode); break; 
         case 0x07: NotImplemented(state); break; 
@@ -37,7 +37,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x09: NotImplemented(state); break; 
         case 0x0A: NotImplemented(state); break; 
         case 0x0B: NotImplemented(state); break; 
-        case 0x0C: NotImplemented(state); break; 
+        case 0x0C: INR_R(state, &state->C); break; 
         case 0x0D: NotImplemented(state); break; 
         case 0x0E: MVI_R_DW(state, &state->C, opcode); break; 
         case 0x0F: NotImplemented(state); break; 
@@ -45,7 +45,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x11: LXI_RP_DW(state, &state->D, &state->E, opcode); break; 
         case 0x12: NotImplemented(state); break; 
         case 0x13: INX_RP(&state->D, &state->E); break;
-        case 0x14: NotImplemented(state); break;
+        case 0x14: INR_R(state, &state->D); break;
         case 0x15: NotImplemented(state); break;
         case 0x16: MVI_R_DW(state, &state->D, opcode); break;
         case 0x17: NotImplemented(state); break;
@@ -53,7 +53,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x19: NotImplemented(state); break;
         case 0x1A: NotImplemented(state); break;
         case 0x1B: NotImplemented(state); break;
-        case 0x1C: NotImplemented(state); break;
+        case 0x1C: INR_R(state, &state->E); break;
         case 0x1D: NotImplemented(state); break;
         case 0x1E: MVI_R_DW(state, &state->E, opcode); break;
         case 0x1F: NotImplemented(state); break;
@@ -61,7 +61,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x21: LXI_RP_DW(state, &state->H, &state->L, opcode); break; 
         case 0x22: NotImplemented(state); break; 
         case 0x23: INX_RP(&state->H, &state->L); break;
-        case 0x24: NotImplemented(state); break;
+        case 0x24: INR_R(state, &state->H); break;
         case 0x25: NotImplemented(state); break;
         case 0x26: MVI_R_DW(state, &state->H, opcode); break;
         case 0x27: NotImplemented(state); break;
@@ -69,7 +69,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x29: NotImplemented(state); break;
         case 0x2A: NotImplemented(state); break;
         case 0x2B: NotImplemented(state); break;
-        case 0x2C: NotImplemented(state); break;
+        case 0x2C: INR_R(state, &state->L); break;
         case 0x2D: NotImplemented(state); break;
         case 0x2E: MVI_R_DW(state, &state->L, opcode); break;
         case 0x2F: NotImplemented(state); break;
@@ -85,7 +85,7 @@ int Run8080cpuOperations(CPUState * state){
         case 0x39: NotImplemented(state); break;
         case 0x3A: NotImplemented(state); break;
         case 0x3B: NotImplemented(state); break;
-        case 0x3C: NotImplemented(state); break;
+        case 0x3C: INR_R(state, &state->A); break;
         case 0x3D: NotImplemented(state); break;
         case 0x3E: MVI_R_DW(state, &state->A, opcode); break;
         case 0x3F: NotImplemented(state); break;
@@ -153,14 +153,14 @@ int Run8080cpuOperations(CPUState * state){
         case 0x7D: MOV_REG_REG(&state->A , &state->L); break;
         case 0x7E: NotImplemented(state); break;
         case 0x7F: MOV_REG_REG(&state->A , &state->A); break;
-        case 0x80: NotImplemented(state); break; 
-        case 0x81: NotImplemented(state); break; 
-        case 0x82: NotImplemented(state); break; 
-        case 0x83: NotImplemented(state); break;
-        case 0x84: NotImplemented(state); break;
-        case 0x85: NotImplemented(state); break;
+        case 0x80: ADD_R(state, &state->B); break; 
+        case 0x81: ADD_R(state, &state->C); break; 
+        case 0x82: ADD_R(state, &state->D); break; 
+        case 0x83: ADD_R(state, &state->E); break;
+        case 0x84: ADD_R(state, &state->H); break;
+        case 0x85: ADD_R(state, &state->L); break;
         case 0x86: NotImplemented(state); break;
-        case 0x87: NotImplemented(state); break;
+        case 0x87: ADD_R(state, &state->A); break;
         case 0x88: NotImplemented(state); break;
         case 0x89: NotImplemented(state); break;
         case 0x8A: NotImplemented(state); break;

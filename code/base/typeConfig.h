@@ -44,6 +44,14 @@
 
 */
 
+#define sign_bit 7
+
+#define v_sf 4
+#define v_zf 3
+#define v_af 2
+#define v_pf 1
+#define v_cf 0
+
 #define f_sign          1<<4
 #define f_zero          1<<3
 #define f_auxcarry      1<<2
