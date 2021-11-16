@@ -57,12 +57,7 @@ ui8 parity(ui8 num, ui8 size){
     return !((ones & 0x01) & 0x01);
 }
 
-//TODO(fran): Check this out
-ui8 CalculateAuxiliaryCarryFlagSubstraction(ui8 num, ui8 substract){
-    return (f_auxcarry & (((num & 0xF0) - (substract & 0xF0)) > 0x0F) << v_af);
-}
-
-ui8 CalculateAuxiliaryCarryFlagAddition(ui8 num, ui8 addition){
+ui8 CalculateAuxiliaryCarryFlag(ui8 num, ui8 addition){
     return (f_auxcarry & (((num & 0x0F) + (addition & 0x0F)) > 0x0F) << v_af);
 }
 
@@ -88,7 +83,7 @@ inline void INR_R(CPUState * state, ui8 * R){
     ++result;
     
     //aux carry flag // adjust/borrow flag
-    ui8 AC = CalculateAuxiliaryCarryFlagAddition(*R, 0x01);
+    ui8 AC = CalculateAuxiliaryCarryFlag(*R, 0x01);
     //zero flag
     ui8 Z = CalculateZeroFlag(result); 
     //sign flag
@@ -111,7 +106,7 @@ inline void ADD_R(CPUState * state, ui8 * R){
     result += *R;
 
     //AUX CARRY
-    ui8 AC = CalculateAuxiliaryCarryFlagAddition(state->A, *R);
+    ui8 AC = CalculateAuxiliaryCarryFlag(state->A, *R);
     //ZERO
     ui8 Z = CalculateZeroFlag(result); 
     //SIGN
@@ -132,8 +127,12 @@ inline void SUB_R(CPUState * state, ui8 * R){
     ui16 result = (0 << 8) | state->A;
     result -= *R;
 
-    //AUX CARRY
-    ui8 AC = CalculateAuxiliaryCarryFlagSubstraction(state->A, *R);
+    //AUX CARRY: to calculate this, we must take into account
+    //how binary substraction works.
+    // substrahend CA2 = CA1 of substrahend + 1
+    // this is equal to ~substrahend + 1
+    ui8 subs = ~*R + 0x01;
+    ui8 AC = CalculateAuxiliaryCarryFlag(state->A, subs);
     //ZERO
     ui8 Z = CalculateZeroFlag(result); 
     //SIGN
@@ -148,3 +147,4 @@ inline void SUB_R(CPUState * state, ui8 * R){
 
     state->A = (ui8)result;
 }
+
